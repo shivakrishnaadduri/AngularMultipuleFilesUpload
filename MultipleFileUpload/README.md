@@ -25,3 +25,17 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+
+
+Project Development steps
+
+            1) npm install --save bootstrap@3.3.5 
+            2) add this line in angular.json at styles array
+                    "node_modules/bootstrap/dist/css/bootstrap.min.css"
+            3)restart the app
+            4 npm install --save font-awesome
+            5) "node_modules/font-awesome/css/font-awesome.css" in styles array in angular.json
+
+
+
