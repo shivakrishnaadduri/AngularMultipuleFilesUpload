@@ -1,10 +1,13 @@
 package com.shiva.learning.controller;
 
-import java.util.Enumeration;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,34 +28,56 @@ public class MultiFileController {
 	    }
 	 	
 	 	@PostMapping("uploadFiles")
-	 	public String uploadMultiFiles(HttpServletRequest request)
+	 	public String uploadMultiFiles(HttpServletRequest request) 
 	 	{
-	 		System.out.println("hitted uploadFiles");
-	 		Enumeration e =request.getParameterNames();
-	 		while(e.hasMoreElements())
-	 		{
-	 			System.out.println(e.nextElement());
-	 		}
+	 		System.out.println("hitting uploadFiles");
+	 		//System.out.println("data is "+ upladeedFiles);
 	 		
+	 		
+	 		List documentList= new ArrayList<>();
+			
+
+	 		//System.out.println(request.getParameter("fileInfo"));
+	 		
+			JSONArray jsonArray = new JSONArray(request.getParameter("fileInfo"));
+			
+			 for (int i = 0; i < jsonArray.length(); i++)
+		        {
+		            JSONObject jsonObj = jsonArray.getJSONObject(i);
+		            documentList.add(jsonObj);
+
+		            System.out.println("index "+ i +" --  "+jsonObj);
+		        }
+			 	
+				 		
+		        
 	 		
 	 		MultipartHttpServletRequest multiPartRequest = new DefaultMultipartHttpServletRequest(request);
+
 			try {
+
 				multiPartRequest = (MultipartHttpServletRequest) request;
 				multiPartRequest.getParameterMap();
-				//multipartRequest.
-				Iterator < String > it = multiPartRequest.getFileNames();
 
-				int i = 1;
+				Iterator<String> itr = multiPartRequest.getFileNames();
+				while (itr.hasNext()) {
 
-				while (it.hasNext()) {
-					MultipartFile multipart = multiPartRequest.getFile(it.next());
-					System.out.println("File name is "+multipart.getOriginalFilename());
-				}
-			}catch(Exception ex) {
+					MultipartFile mFile = multiPartRequest.getFile(itr.next());
+
+ 
+					System.out.println("FileName is "+mFile.getOriginalFilename());
+					
+					// Do something with the mfile based on your requirement
 				
+				
+				
+				}
 
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-	 		return "uploaded ";
+
+			return "uploaded ";
 	 	}
 	 
 
